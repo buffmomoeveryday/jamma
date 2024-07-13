@@ -1,0 +1,3 @@
+components:
+  button: "components/button.html"
+  anchor: "components/anchor.html"

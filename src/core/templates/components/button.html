@@ -1,0 +1,4 @@
+{% var variant=variant|default:"success" %}
+{% comment %} <button class="btn btn-success">Success</button> {% endcomment %}
+{% comment %} <button class="{{ variant|match:"outline:btn-outline,ghost:btn-ghost" }}">{{ children }}</button> {% endcomment %}
+<button class="{{ variant|match:'accent:btn btn-active btn-accent,success:btn btn-success' }}">{{ children }}</button>

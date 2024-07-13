@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mx-auto p-6">
+    <div class="flex justify-between items-center mb-6">
+        <h1 class="text-2xl font-bold">Your Websites</h1>
+        <a href="{% url 'create_new_url' %}" class="btn btn-primary">Create New URL</a>
+    </div>
+
+    <div class="bg-gray-900 shadow-md rounded-lg p-6">
+        
+        {% for website in user_website %}
+            <div class="flex justify-between items-center border-b border-gray-200 py-4">
+                <div>
+                    <a href="{% url 'url_detail' website.url %}" class="text-lg font-semibold  hover:underline">{{ website.name }}</a>
+                    <p class="text-white-600">{{ website.url }}</p>
+                </div>
+                <a href="{% url 'delete_url' website.url %}" class="btn btn-error btn-sm" hx-confirm="You Sure Want to Delete?">Delete</a>
+            </div>
+            {% empty %}
+            {% endfor %}
+        </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://unpkg.com/htmx.org@1.9.12" integrity="sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/hyperscript.org@0.9.12"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.12/dist/ext/head-support.js"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.11.1/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+
+
+    <title>{% block title %}{% endblock title %}</title>
+    
+</head>
+
+{% block style %}{% endblock style %}
+
+<body hx-ext="head-support" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+
+    {% if request.user.is_authenticated %}
+        {% include "components/navbar.html" %}
+    {% endif %}
+        {% include "components/messages.html" %}
+
+    {% block content %}
+    {% endblock content %}
+</body>
+
+{% block script %}
+{% endblock script %}
+</html>

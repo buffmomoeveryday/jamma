@@ -1,0 +1,3 @@
+{% var variant=variant|default:"success" %}
+{% var hx-boost=hx-boost|default:"this" %}
+<a href="{{ url }}" {% attrs hx-get hx-target hx-boost %} class="{{ variant|match:'accent:btn btn-active btn-accent,success:btn btn-success' }}">{{ children }}</a>

@@ -1,0 +1,228 @@
+{% extends "base.html" %}
+{% load slippers %}
+
+{% block content %}
+<div id="thisId" class="p-6 bg-base-100 rounded-lg shadow-lg">
+    <div class="flex justify-between items-center mb-4">
+        <div>
+            <p class="text-sm text-gray-500">Last updated at: <span class="font-bold">{{ last_updated }}</span></p>
+        </div>
+        <a href="{% url 'url_detail' website %}" class="btn btn-success">Refresh</a>
+    </div>
+
+    <div class="mb-6">
+        <h2 class="text-2xl font-bold">
+            {{ detail.name }} - <span class="text-primary">{{ detail.url }}</span>
+        </h2>
+    </div>
+
+    <div class="mb-4">
+        <h3 class="text-xl font-semibold">Add this URL string to your head</h3>
+        <div class="flex justify-between">
+            <div>
+                <p id="url_string" class="">{{ url_string }}</p>
+            </div>
+            <div>
+                <button class="btn btn-secondary" _="on click
+                writeText(#url_string's innerText) on navigator.clipboard
+                put 'Copied!!' into me
+                wait 1s
+                put 'Copy' into me">
+                    Copy
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="mb-6">
+
+    <div class="stats shadow">
+  
+
+  <div class="stat">
+    <div class="stat-figure text-secondary">
+       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-8 h-8 stroke-current">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z" />
+</svg>
+
+    </div>
+    <div class="stat-title">Unique Users Visits</div>
+    <div class="stat-value">{{ unique }}</div>
+  </div>
+  
+  <div class="stat">
+    <div class="stat-figure text-secondary">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-8 h-8 stroke-current">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+  <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+</svg>
+
+
+
+    </div>
+    <div class="stat-title">Total Visits</div>
+    <div class="stat-value" id="total_url_visits">{{ count }}</div>
+  </div>
+  
+  
+  <div class="stat">
+    <div class="stat-figure text-secondary">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-8 h-8 stroke-current">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+  <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+</svg>
+
+    </div>
+    <div class="stat-title">Bounce Rate</div>
+    <div class="stat-value" id="bounce_rate">{{ bounce }} %</div>
+  </div>
+
+</div>
+
+  
+    </div>
+
+<div class="flex flex-row">
+    <!-- Table Container -->
+  <div class="overflow-x-auto w-1/2 p-2">
+        <table class="table-auto w-full border border-gray-300">
+            <thead>
+                <tr class="bg-[#FF52D9] text-black">
+                    <th class="border border-gray-300 px-4 py-2">#</th>
+                    <th class="border border-gray-300 px-4 py-2">Url</th>
+                    <th class="border border-gray-300 px-4 py-2">Visits</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for items in urls %}
+                    <tr>
+                        <th class="border border-gray-300 px-4 py-2">{{ forloop.counter }}</th>
+                        <td class="border border-gray-300 px-4 py-2">{{ items.url|urlizetrunc:50 }}</td>
+                        <td class="border border-gray-300 px-4 py-2">{{ items.url_count }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <!-- Chart Container -->
+    <div id="myChart" class="w-1/2"></div>
+</div>
+
+
+<div hx-get="{% url 'htmx-utm-chart' detail.url %}"
+    hx-target="this"
+    hx-swap="innerHTML"
+    hx-trigger="load"
+    >
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        var options = {
+            chart: {
+                type: 'bar'
+            },
+            title: {
+                text: 'Number of URL Views',
+                style: {
+                    color: '#FFFFFF'
+                }
+            },
+            xaxis: {
+                categories: {{ chart_labels|safe }},
+                title: {
+                    text: "Urls",
+                    style: {
+                        color: '#FFFFFF'
+                    }
+                },
+                labels: {
+                    style: {
+                        colors: ['#FFFFFF']
+                    }
+                }
+            },
+            yaxis: {
+                min: 0,
+                title: {
+                    text: 'Views',
+                    align: 'high',
+                    style: {
+                        color: '#FFFFFF'
+                    }
+                },
+                labels: {
+                    style: {
+                        colors: ['#FFFFFF']
+                    }
+                }
+            },
+            plotOptions: {
+                bar: {
+                    dataLabels: {
+                        position: 'top' // Options: top, center, bottom
+                    }
+                }
+            },
+            dataLabels: {
+                enabled: true,
+                offsetX: -6,
+                style: {
+                    fontSize: '12px',
+                    colors: ['#FFFFFF']
+                }
+            },
+            series: [{
+                name: 'URL Views',
+                data: {{ chart_data|safe }},
+                color: '#FF52D9'
+            }],
+    //        credits: {
+      //          enabled: false
+        //    }
+        };
+
+        var chart = new ApexCharts(document.querySelector("#myChart"), options);
+        chart.render();
+    });
+</script>
+
+{% comment %} 
+
+    <script>
+        const socket = new WebSocket("ws://localhost:8000/ws/pageview/")
+        
+        socket.onopen = (event) => {
+            console.log("connected");
+        }
+
+        socket.onclose = (event)=>{
+            console.log("disconnected");
+        }
+
+        socket.onmessage = (event) => {
+            
+            event_string = JSON.parse(event.data)
+            
+            console.log(event_string)
+            
+            if(event_string['unqiue_page_view']=="true"){
+                visit = event_string['text_message']
+                totalvisit = document.getElementById("total_url_visits")
+                totalvisit.innerHTML = visit
+
+
+            }else{
+                console.log('not event')
+            }
+            
+
+        }
+     
+    </script> {% endcomment %}
+</div>
+
+{% endblock content %}

@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mx-auto p-4">
+    <h1 class="text-2xl font-bold mb-4">UTM Data</h1>
+
+    <h2 class="text-xl font-semibold mt-6 mb-2">Mediums</h2>
+    <div class="overflow-x-auto">
+        <table class="table w-full border border-white">
+            <thead>
+                <tr>
+                    <th>UTM Medium</th>
+                    <th>Total Clicks</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in list_of_medium_utms %}
+                <tr>
+                    <td>{{ item.utm_medium }}</td>
+                    <td>{{ item.utm_medium_count }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <h2 class="text-xl font-semibold mt-6 mb-2">Terms</h2>
+    <div class="overflow-x-auto">
+        <table class="table w-full border border-white">
+            <thead>
+                <tr>
+                    <th>UTM Term</th>
+                    <th>Total Clicks</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in list_of_term_utms %}
+                <tr>
+                    <td>{{ item.utm_term }}</td>
+                    <td>{{ item.utm_term_count }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <h2 class="text-xl font-semibold mt-6 mb-2">Campaign</h2>
+    <div class="overflow-x-auto">
+        <table class="table w-full border border-white">
+            <thead>
+                <tr>
+                    <th>UTM Campaign</th>
+                    <th>Total Clicks</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in list_of_campaign_utms %}
+                <tr>
+                    <td>{{ item.utm_campaign }}</td>
+                    <td>{{ item.utm_campaign_count }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <h2 class="text-xl font-semibold mt-6 mb-2">Source</h2>
+    <div class="overflow-x-auto">
+        <table class="table w-full border border-white">
+            <thead>
+                <tr>
+                    <th>UTM Source</th>
+                    <th>Total Clicks</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in list_of_source_utms %}
+                <tr>
+                    <td>{{ item.utm_source }}</td>
+                    <td>{{ item.utm_source_count }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
