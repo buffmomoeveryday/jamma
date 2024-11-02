@@ -9,6 +9,9 @@ from django.db import IntegrityError
 from icecream import ic as iceicebaby
 from silk.profiling.profiler import silk_profile
 
+from django.db.models import Count
+
+from track.models import PageView
 from core.utils.url import create_url_string
 from landing.form import NewUrlForm
 from track.models import Website
@@ -89,9 +92,6 @@ def delete_url(request, url):
         return redirect(request.META["HTTP_REFERER"])
 
 
-from django.db.models import Count
-
-from track.models import PageView
 from channels.layers import get_channel_layer
 
 channel_layer = get_channel_layer()

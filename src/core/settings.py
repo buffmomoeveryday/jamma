@@ -46,8 +46,6 @@ INSTALLED_APPS = [
     "user",
     # channels
     "daphne",
-    # event stream
-    "django_eventstream",
     # django's own
     "django.contrib.admin",
     "django.contrib.auth",
