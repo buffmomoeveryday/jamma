@@ -2,6 +2,7 @@ from pathlib import Path
 
 from decouple import config
 from django.shortcuts import reverse
+import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -62,6 +63,8 @@ INSTALLED_APPS += THIRD_PARTY_APPS
 MIDDLEWARE = [
     # custom middleware: host validation, session middleware for recording session
     # "core.middleware.hostvalidation.HostValidationMiddleware",
+    # whitenoise
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     # django middlewares
     "django.middleware.common.CommonMiddleware",
     "django.middleware.security.SecurityMiddleware",
@@ -163,7 +166,13 @@ USE_I18N = True
 USE_TZ = True
 
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
-STATIC_URL = "static/"
+STATIC_URL = "/static/"
+STATIC_ROOT = BASE_DIR / "staticfiles"
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "core/static"),
+]
+
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
