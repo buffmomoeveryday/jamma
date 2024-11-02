@@ -20,7 +20,19 @@ python manage.py makemigrations
 python manage.py migrate 
 ```
 
+start redis server
+```bash
+redis-server #different step is required for windows os
+```
+
+start celery worker
+```bash
+celery -A core worker -l info #different step is required for windows
+
+```
+
 run the development server
 ```bash
 python manage.py runserver
 ```
+
