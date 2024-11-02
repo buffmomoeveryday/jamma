@@ -1,5 +1,5 @@
-def create_url_string(domain):
-    URL = f"<script defer data-domain='http://{domain}' src='https://jamma.buffmomo.xyz/api/script.js'></script>"
+def create_url_string(domain, tracking_url):
+    URL = f"<script defer data-domain='http://{domain}' src='{tracking_url}/api/script.js'></script>"
     url = URL.replace("'", '"')
     return url
 
