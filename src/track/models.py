@@ -150,7 +150,11 @@ class Ignore(BaseModel):
     def __str__(self):
         return self.ignore_regex
 
+
 class TrackingURL(BaseModel):
-    url = models.URLField(verbose_name="Tracking Base Url")
+    url = models.URLField(
+        verbose_name="Tracking Base Url", default="https://jamma.buffmomo.xyz"
+    )
+
     def __str__(self):
         return self.url
