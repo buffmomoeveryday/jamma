@@ -22,8 +22,6 @@ class Website(BaseModel):
         page_views = PageView.objects.filter(website=self)
         sessions = page_views.values("ip_address").annotate(visit_count=Count("id"))
 
-        from icecream import ic
-
         single_page_sessions = 0
         total_sessions = 0
 
@@ -130,11 +128,7 @@ class UserAgent(BaseModel):
 
 
 class UTM(BaseModel):
-    website = models.ForeignKey(
-        Website,
-        on_delete=models.CASCADE,
-        related_name="utms",
-    )
+    website = models.ForeignKey(Website, on_delete=models.CASCADE, related_name="utms")
 
     utm_medium = models.CharField(max_length=255)
     utm_source = models.CharField(max_length=255)
@@ -150,10 +144,13 @@ class UTM(BaseModel):
 
 class Ignore(BaseModel):
     webiste = models.ForeignKey(Website, on_delete=models.CASCADE)
-
     ignore_regex = models.CharField(max_length=255, null=True, blank=True)
-
     objects = models.Manager()
 
     def __str__(self):
         return self.ignore_regex
+
+class TrackingURL(BaseModel):
+    url = models.URLField(verbose_name="Tracking Base Url")
+    def __str__(self):
+        return self.url

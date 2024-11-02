@@ -11,12 +11,16 @@ from silk.profiling.profiler import silk_profile
 
 from django.db.models import Count
 
-from track.models import PageView
+from track.models import PageView, TrackingURL
 from core.utils.url import create_url_string
 from landing.form import NewUrlForm
 from track.models import Website
 
 import asyncio
+
+from channels.layers import get_channel_layer
+
+channel_layer = get_channel_layer()
 
 
 @login_required(login_url="/login")
@@ -92,15 +96,11 @@ def delete_url(request, url):
         return redirect(request.META["HTTP_REFERER"])
 
 
-from channels.layers import get_channel_layer
-
-channel_layer = get_channel_layer()
-
-
 @login_required(login_url="/login")
 def url_detail(request, url):
+    tracking = TrackingURL.objects.first()
     website = Website.objects.filter(url=url).prefetch_related("pageview_set").first()
-    url_string = create_url_string(domain=url)
+    url_string = create_url_string(domain=url, tracking_url=tracking)
 
     result = PageView.objects.filter(website=website).aggregate(
         unique_views=Count("ip_address", distinct=True)
