@@ -14,7 +14,7 @@ from .models import (
 # Register your models here.
 
 admin.site.register(Website)
-admin.site.register(PageView)buf
+admin.site.register(PageView)
 admin.site.register(Event)
 admin.site.register(Referer)
 admin.site.register(UserAgent)
