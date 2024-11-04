@@ -17,26 +17,26 @@ services:
     depends_on:
       - redis
 
-  # nginx:
-  #   build: ./nginx
-  #   volumes:
-  #     - static_volume:/usr/src/static
-  #     - media_volume:/usr/src/media
-  #   ports:
-  #     - "80:80"
-  #   depends_on:
-  #     - web
-
-  caddy:
-    build: ./caddy
+  nginx:
+    build: ./nginx
     volumes:
       - static_volume:/usr/src/static
       - media_volume:/usr/src/media
     ports:
       - "80:80"
-      - "443:443"
     depends_on:
       - web
+
+  # caddy:
+  #   build: ./caddy
+  #   volumes:
+  #     - static_volume:/usr/src/static
+  #     - media_volume:/usr/src/media
+  #   ports:
+  #     - "80:80"
+  #     - "443:443"
+  #   depends_on:
+  #     - web
 
   redis:
     image: redis:latest
