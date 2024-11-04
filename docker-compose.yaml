@@ -33,6 +33,8 @@ services:
       - "6379:6379"
     volumes:
       - redis_data:/data
+    command:
+      - redis-server
 
   celery_worker:
     build: .
