@@ -1,0 +1,19 @@
+siddharthakhanal.name.np {
+
+	handle_path /static/* {
+		root /usr/src/static/
+		file_server
+	  }
+
+	handle_path /media/* {
+		root /usr/src/media/
+		file_server
+	}
+	
+	reverse_proxy 127.0.0.1:8000
+
+}
+
+www.siddharthakhanal.name.np {
+	redir https://siddharthakhanal.name.np{uri}
+}
