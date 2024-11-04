@@ -8,7 +8,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = config("SECRET_KEY")
 DEBUG = config("DEBUG", default=True, cast=bool)
-
 IP_INFO_TOKEN = config("IP_INFO_TOKEN")
 
 
@@ -27,7 +26,6 @@ THIRD_PARTY_APPS = [
     "django_extensions",
     # debug
     "silk",
-    "debug_toolbar",
     # websockets
     "channels",
     # htmx
@@ -129,17 +127,6 @@ DATABASES = {
     }
 }
 
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.postgresql",
-#         "NAME": "postgres",
-#         "USER": "postgres.ciwvvgjwebvhjtwefirl",
-#         "PASSWORD": "b0WRRn0CZRkjrwtM",
-#         "HOST": "aws-0-us-east-1.pooler.supabase.com",
-#         "PORT": "6543",
-#     }
-# }
-
 
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 AUTH_PASSWORD_VALIDATORS = [
@@ -196,13 +183,12 @@ CSRF_TRUSTED_ORIGINS = [
 ]
 
 # celery
-CELERY_CACHE_BACKEND = "django-cache"
-CELERY_BROKER_URL = "redis://localhost:6379"
-CELERY_ACCEPT_CONTENT = ["application/json"]
+# Celery Configuration
+CELERY_BROKER_URL = "redis://redis:6379/0"
+CELERY_RESULT_BACKEND = "redis://redis:6379/0"
+CELERY_ACCEPT_CONTENT = ["json"]
 CELERY_TASK_SERIALIZER = "json"
-CELERY_TIMEZONE = "Asia/Kathmandu"
-CELERY_RESULT_BACKEND = "django-db"
-
+CELERY_RESULT_SERIALIZER = "json"
 # celery beat
 CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
 
@@ -210,18 +196,11 @@ CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
 AUTH_USER_MODEL = "user.User"
 LOGIN_REDIRECT_URL = "/"
 
-# debug
-INTERNAL_IPS = [
-    "127.0.0.1",
-    "https://jamma.buffmomo.xyz/",
-]
 
 # silk
 SILKY_PYTHON_PROFILER = True
 SILKY_AUTHENTICATION = True  # User must login
 SILKY_AUTHORISATION = True
-# not supported by sqlite3
-# SILKY_ANALYZE_QUERIES = True
 
 # session
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
@@ -231,11 +210,8 @@ SESSION_CACHE_ALIAS = "default"
 # cache
 CACHES = {
     "default": {
-        "BACKEND": "django_redis.cache.RedisCache",
+        "BACKEND": "django.core.cache.backends.redis.RedisCache",
         "LOCATION": "redis://127.0.0.1:6379/1",
-        "OPTIONS": {
-            "CLIENT_CLASS": "django_redis.client.DefaultClient",
-        },
     }
 }
 
